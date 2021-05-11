@@ -1,29 +1,54 @@
 import React, {useState, useEffect} from 'react';
 import getKpiDetails from '../api/getKpiDetails'
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button"
 
 const Table = ({items}) =>{
 
+    const [results, setResults] = useState([])
+    const [show, setShow] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => {
+        setShow(true)
+    }
+
+    console.log(results)
     useEffect(()=>{
         console.log("asdfsdf")
-        (async() =>{
-            await getKpiDetails()
-        })()
+        const respone = async() =>{
+           const {data} =  await getKpiDetails()
+        //    console.log("here..........",data.data.channels)
+           setResults(data.data.channels)
+
+        }
+        if(results){
+            respone()
+        }   
     },[])
+    console.log("updated state",results, results.length)
+    const sortedResults = results.length>0?results.sort((a,b)=>(a.subscribedCount<b.subscribedCount?1:-1)):[]
+    const renderedTableRows = sortedResults.length>0? sortedResults.map((result,index)=>{
+        // console.log
+        let milliseconds = parseInt(result.indexTimestamp)*1000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString().split(',')[0]
 
-    const renderedItems = items.map(item =>{
-
-        return (
-            <div key={item.className}>
-                <div className="title active">
-                    <i className="dropdown icon"></i>
-                    {item.channelName}
-                </div>
-                <div className="content active">
-                    {item.numOfUsers}
-                </div>
-            </div>
-        )
-    })
+        console.log(humanDateFormat)
+         return (
+             <tr>
+                <td>{index+1}</td>
+                <td>{result.name}</td>
+                <td>{result.subscribedCount}</td>
+                <td>{humanDateFormat}</td>
+                <td>
+                    <button className="btn btn-secondary" onClick={handleShow}>
+                        <i className="fas fa-angle-double-right"></i> Details
+                    </button>
+                </td>
+            </tr>
+         )
+     }):[]
+    console.log("result..........",renderedTableRows)
     return (
         <section id="posts">
             <div className="container">
@@ -38,79 +63,14 @@ const Table = ({items}) =>{
                             <thead className="table-dark">
                                 <tr>
                                     <th>#</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Date</th>
+                                    <th>Channel Name</th>
+                                    <th>Subscriber Count</th>
+                                    <th>Date Created</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Post One</td>
-                                    <td>Web development</td>
-                                    <td>May 10, 2018</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ETH</td>
-                                    <td>Ethereum</td>
-                                    <td>May 1, 2019</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>ADA</td>
-                                    <td>Cardano</td>
-                                    <td>May 10, 2018</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>RLC</td>
-                                    <td>I EXEC</td>
-                                    <td>June 10, 2018</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>MOD</td>
-                                    <td>Modum</td>
-                                    <td>Jan 1, 2020</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>DOT</td>
-                                    <td>Polkadot</td>
-                                    <td>June 15, 2020</td>
-                                    <td>
-                                        <button className="btn btn-secondary">
-                                            <i className="fas fa-angle-double-right"></i> Details
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody> 
+                                {renderedTableRows} 
                             </tbody>
                         </table>
                     </div>
@@ -142,6 +102,20 @@ const Table = ({items}) =>{
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} animation={false}>
+                <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+                </Modal.Footer>
+            </Modal>
 
         </section>
     )
