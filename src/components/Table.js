@@ -14,7 +14,6 @@ const Table = ({items}) =>{
 
     console.log(results)
     useEffect(()=>{
-        console.log("asdfsdf")
         const respone = async() =>{
            const {data} =  await getKpiDetails()
         //    console.log("here..........",data.data.channels)
@@ -31,17 +30,26 @@ const Table = ({items}) =>{
         // console.log
         let milliseconds = parseInt(result.indexTimestamp)*1000
         const dateObject = new Date(milliseconds)
-        const humanDateFormat = dateObject.toLocaleString().split(',')[0]
+        const date = dateObject.toLocaleString().split(',')[0]
+        let gold = "🥇"
+        let silver = " 🥈"
+        let bronze = "🥉"
 
-        console.log(humanDateFormat)
-         return (
+        const medals = index==0 ?gold:index==1?silver:index==2?bronze:''
+        const modalContent = (result) =>{
+            console.log("######",result,"inside modal")
+            handleShow()
+        }
+        // handleShow
+        return (
              <tr>
+                <td>{medals}</td>
                 <td>{index+1}</td>
                 <td>{result.name}</td>
                 <td>{result.subscribedCount}</td>
-                <td>{humanDateFormat}</td>
+                <td>{date}</td>
                 <td>
-                    <button className="btn btn-secondary" onClick={handleShow}>
+                    <button className="btn btn-secondary" onClick={(result)=>{modalContent()}}>
                         <i className="fas fa-angle-double-right"></i> Details
                     </button>
                 </td>
@@ -56,13 +64,14 @@ const Table = ({items}) =>{
                     <div className= "col-md-9">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Latest Posts</h4>
+                                <h4>EPNS Channels</h4>
                             </div>
                         </div>
                         <table className="table table-striped">
                             <thead className="table-dark">
                                 <tr>
-                                    <th>#</th>
+                                    <th></th>
+                                    <th><i class="twa twa-railway-car"></i></th>
                                     <th>Channel Name</th>
                                     <th>Subscriber Count</th>
                                     <th>Date Created</th>
@@ -102,9 +111,9 @@ const Table = ({items}) =>{
                     </div>
                 </div>
             </div>
-            <Modal show={show} onHide={handleClose} animation={false}>
+            <Modal show={show} onHide={handleClose} animation={false} aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Details:</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
                 <Modal.Footer>
