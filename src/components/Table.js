@@ -6,8 +6,10 @@ import Button from "react-bootstrap/Button"
 const Table = ({items}) =>{
 
     const [results, setResults] = useState([])
+    const [row, selectedRow] = useState('')
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
+    
     const handleShow = () => {
         setShow(true)
     }
@@ -16,7 +18,6 @@ const Table = ({items}) =>{
     useEffect(()=>{
         const respone = async() =>{
            const {data} =  await getKpiDetails()
-        //    console.log("here..........",data.data.channels)
            setResults(data.data.channels)
 
         }
@@ -38,6 +39,7 @@ const Table = ({items}) =>{
         const medals = index==0 ?gold:index==1?silver:index==2?bronze:''
         const modalContent = (result) =>{
             console.log("######",result,"inside modal")
+            selectedRow(result)
             handleShow()
         }
         // handleShow
@@ -49,7 +51,7 @@ const Table = ({items}) =>{
                 <td>{result.subscribedCount}</td>
                 <td>{date}</td>
                 <td>
-                    <button className="btn btn-secondary" onClick={(result)=>{modalContent()}}>
+                    <button className="btn btn-secondary" onClick={()=>{modalContent(result)}}>
                         <i className="fas fa-angle-double-right"></i> Details
                     </button>
                 </td>
@@ -112,16 +114,16 @@ const Table = ({items}) =>{
                 </div>
             </div>
             <Modal show={show} onHide={handleClose} animation={false} aria-labelledby="contained-modal-title-vcenter" centered>
-                <Modal.Header closeButton>
+                <Modal.Header>
                 <Modal.Title>Details:</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body>
+                    <p><span className="fw-bold">INFO: </span><span className="text-muted">{row.info}</span></p>
+                    <p><span className="fw-bold ">URL: </span><a href={row.url} class="link-primary">{row.url}</a></p>
+                </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="success" onClick={handleClose}>
                     Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
                 </Button>
                 </Modal.Footer>
             </Modal>
