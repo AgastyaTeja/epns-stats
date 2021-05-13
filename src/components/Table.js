@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button"
 const Table = ({items}) =>{
 
     const [results, setResults] = useState([])
+    const [cardValues, setCardValues] = useState([])
     const [row, selectedRow] = useState('')
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
@@ -14,21 +15,19 @@ const Table = ({items}) =>{
         setShow(true)
     }
 
-    console.log(results)
     useEffect(()=>{
         const respone = async() =>{
            const {data} =  await getKpiDetails()
+           console.log("Total data",data)
            setResults(data.data.channels)
-
+           setCardValues(data.data.epnss)
         }
         if(results){
             respone()
         }   
     },[])
-    console.log("updated state",results, results.length)
     const sortedResults = results.length>0?results.sort((a,b)=>(a.subscribedCount<b.subscribedCount?1:-1)):[]
     const renderedTableRows = sortedResults.length>0? sortedResults.map((result,index)=>{
-        // console.log
         let milliseconds = parseInt(result.indexTimestamp)*1000
         const dateObject = new Date(milliseconds)
         const date = dateObject.toLocaleString().split(',')[0]
@@ -36,13 +35,12 @@ const Table = ({items}) =>{
         let silver = " 🥈"
         let bronze = "🥉"
 
-        const medals = index==0 ?gold:index==1?silver:index==2?bronze:''
+        const medals = index===0 ?gold:index===1?silver:index===2?bronze:''
         const modalContent = (result) =>{
-            console.log("######",result,"inside modal")
             selectedRow(result)
             handleShow()
         }
-        // handleShow
+    
         return (
              <tr>
                 <td>{medals}</td>
@@ -58,7 +56,6 @@ const Table = ({items}) =>{
             </tr>
          )
      }):[]
-    console.log("result..........",renderedTableRows)
     return (
         <section id="posts">
             <div className="container">
@@ -88,25 +85,25 @@ const Table = ({items}) =>{
                     <div className="col-md-3">
                         <div className="card text-center bg-success text-white mb-3">
                             <div className="card-body">
-                                <h3>Posts</h3>
+                                <h3>Channels</h3>
                                 <h4 className="display-4">
-                                    <i className="fas fa-pencil-alt"></i> 6
+                                    <i className="far fa-bell"></i>{cardValues[0].channelCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
                         <div className="card text-center bg-primary text-white mb-3">
                             <div className="card-body">
-                                <h3>Category</h3>
+                                <h3>Subscribers</h3>
                                 <h4 className="display-4">
-                                    <i className="fas fa-folder"></i> 4
+                                    <i className="fas fa-users"></i> {cardValues[0].userCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
                         <div className="card text-center bg-warning text-white mb-3">
                             <div className="card-body">
-                                <h3>Users</h3>
+                                <h3>Notifications</h3>
                                 <h4 className="display-4">
-                                    <i className="fas fa-users"></i> 4
+                                    <i className="fas fa-comment"></i> {cardValues[0].notificationCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
