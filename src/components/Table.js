@@ -42,11 +42,11 @@ const Table = ({items}) =>{
         }
     
         return (
-             <tr>
+             <tr key={result.id}>
                 <td>{medals}</td>
                 <td>{index+1}</td>
                 <td>{result.name}</td>
-                <td>{result.subscribedCount}</td>
+                <td className="text-right">{result.subscribedCount}</td>
                 <td>{date}</td>
                 <td>
                     <button className="btn btn-secondary" onClick={()=>{modalContent(result)}}>
@@ -70,9 +70,9 @@ const Table = ({items}) =>{
                             <thead className="table-dark">
                                 <tr>
                                     <th></th>
-                                    <th><i class="twa twa-railway-car"></i></th>
+                                    <th><i className="twa twa-railway-car"></i></th>
                                     <th>Channel Name</th>
-                                    <th>Subscriber Count</th>
+                                    <th className="text-wrap">Subscriber Count</th>
                                     <th>Date Created</th>
                                     <th></th>
                                 </tr>
@@ -87,7 +87,7 @@ const Table = ({items}) =>{
                             <div className="card-body">
                                 <h3>Channels</h3>
                                 <h4 className="display-4">
-                                    <i className="far fa-bell"></i>{cardValues[0].channelCount.toLocaleString()}
+                                    <i className="far fa-bell"></i>{cardValues.length===0?"":cardValues[0].channelCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ const Table = ({items}) =>{
                             <div className="card-body">
                                 <h3>Subscribers</h3>
                                 <h4 className="display-4">
-                                    <i className="fas fa-users"></i> {cardValues[0].userCount.toLocaleString()}
+                                    <i className="fas fa-users"></i> {cardValues.length===0?"":cardValues[0].userCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ const Table = ({items}) =>{
                             <div className="card-body">
                                 <h3>Notifications</h3>
                                 <h4 className="display-4">
-                                    <i className="fas fa-comment"></i> {cardValues[0].notificationCount.toLocaleString()}
+                                    <i className="fas fa-comment"></i> {cardValues.length===0?"":cardValues[0].notificationCount.toLocaleString()}
                                 </h4>
                             </div>
                         </div>
@@ -116,7 +116,7 @@ const Table = ({items}) =>{
                 </Modal.Header>
                 <Modal.Body>
                     <p><span className="fw-bold">INFO: </span><span className="text-muted">{row.info}</span></p>
-                    <p><span className="fw-bold ">URL: </span><a href={row.url} class="link-primary">{row.url}</a></p>
+                    <p><span className="fw-bold ">URL: </span><a href={row.url} className="link-primary">{row.url}</a></p>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="success" onClick={handleClose}>

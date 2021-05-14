@@ -7,8 +7,7 @@ const Footer = () =>{
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <p className="lead text-center">Copyright &copy; <span id="year"></span>
-                            EPNS Anlaytics
+                        <p className="lead text-center">Follow EPNS: <a href="https://twitter.com/epnsproject"  style={{color:"white"}}><i className="fab fa-twitter ml-2"></i></a>
                         </p>
                         
                     </div>

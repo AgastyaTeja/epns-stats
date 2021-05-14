@@ -10,15 +10,13 @@ const Actions = () =>{
                     <div className="row">
                         <div className="d-grid gap-3 d-md-flex justify-content-md-start">
                             <div>
-                                <button href="#" className="btn btn-primary" data-toggle="modal" data-target="#addAddress">
-                                    <i className="fas fa-plus"></i> Filter by address
-                                </button>
+                                <i className="fab fa-ethereum fa-1x"></i><span className="lead fw-bold"> Network: </span>
+                                <span className="">Ropsten</span>
                             </div>
 
                             <div>
-                                <button href="#" className="btn btn-success">
-                                    <i className="fas fa-sync"></i> Data Refresh
-                                </button>
+                                 <i className="fas fa-cube fa-1x"></i><span className=" lead fw-bold"> Block: </span>
+                                <span className="">10,080,431</span>
                             </div>
 
                         </div>

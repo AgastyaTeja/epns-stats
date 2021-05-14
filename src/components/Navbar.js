@@ -13,8 +13,9 @@ const Navbar = () =>{
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-0">
             <div className="container">
+                
                 <a className="navbar-brand" href="/#">
-                     EPNS Analytics
+                    <i className="fas fa-cog fa-sm"> </i> EPNS Analytics
                 </a>  
                 <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"><span className="navbar-toggler-icon"></span></button>
 
@@ -26,9 +27,7 @@ const Navbar = () =>{
                         <li className="nav-item px-2" onClick={()=>{onHeaderClick("About")}}>
                             <a className={activeElement==="About"?"nav-link active":"nav-link"}  target="_blank" href="https://epns.io/" rel="noopener noreferrer">About EPNS</a>
                         </li>
-                        <li className="nav-item px-2" onClick={()=>{onHeaderClick("Features")}}>
-                            <a className={activeElement==="Features"?"nav-link active":"nav-link"} href="/#">Features</a>
-                        </li>
+
                     </ul>
 
                     <ul className="navbar-nav ms-auto" onClick={()=>{onHeaderClick("Feedback")}}>
@@ -36,7 +35,7 @@ const Navbar = () =>{
                             <a className={activeElement==="Feedback"?"nav-link active":"nav-link"}>Feedback:</a>
                         </li>
                         <li className="nav-item px-2" onClick={()=>{onHeaderClick("twitter")}}>
-                            <a className={activeElement==="Feedback"?"nav-link active":"nav-link"}  href="https://twitter.com/agastyateja" target="_blank" rel="noopener noreferrer" style={{color:"white"}}><i class="bi bi-twitter"></i></a>
+                            <a className={activeElement==="Feedback"?"nav-link active":"nav-link"}  href="https://twitter.com/agastyateja" target="_blank" rel="noopener noreferrer" style={{color:"white"}}><i className="bi bi-twitter"></i></a>
                         </li>
                     </ul>
                 </div>
