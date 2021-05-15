@@ -32,7 +32,7 @@ const Navbar = () =>{
 
                     <ul className="navbar-nav ms-auto" onClick={()=>{onHeaderClick("Feedback")}}>
                         <li className="nav-item px-2">
-                            <a className={activeElement==="Feedback"?"nav-link active":"nav-link"}>Feedback:</a>
+                            <a className={activeElement==="Feedback"?"nav-link active":"nav-link"} href="/#">Feedback:</a>
                         </li>
                         <li className="nav-item px-2" onClick={()=>{onHeaderClick("twitter")}}>
                             <a className={activeElement==="Feedback"?"nav-link active":"nav-link"}  href="https://twitter.com/agastyateja" target="_blank" rel="noopener noreferrer" style={{color:"white"}}><i className="bi bi-twitter"></i></a>

@@ -24,7 +24,7 @@ const Actions = () =>{
                 </div>
             </section>
             {/* Add ETH address */}
-            <div className="modal" tabindex="-1" id="addAddress">
+            <div className="modal" tabIndex="-1" id="addAddress">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                     <div className="modal-header bg-primary">
@@ -33,7 +33,7 @@ const Actions = () =>{
                     </div>
                     <div className="modal-body">
                         <form className="form-group">
-                            <label for="exampleInputPassword1" className="form-label">ETH Address is used to query for results</label>
+                            <label htmlFor="exampleInputPassword1" className="form-label">ETH Address is used to query for results</label>
                             <input type="password" className="form-control" id="exampleInputPassword1"></input>
                         </form>
                     </div>
